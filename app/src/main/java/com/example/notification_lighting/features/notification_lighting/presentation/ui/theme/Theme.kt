@@ -1,4 +1,4 @@
-package com.example.notification_lighting.ui.theme
+package com.example.notification_lighting.features.notification_lighting.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

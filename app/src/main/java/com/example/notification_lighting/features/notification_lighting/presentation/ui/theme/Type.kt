@@ -1,4 +1,4 @@
-package com.example.notification_lighting.ui.theme
+package com.example.notification_lighting.features.notification_lighting.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
