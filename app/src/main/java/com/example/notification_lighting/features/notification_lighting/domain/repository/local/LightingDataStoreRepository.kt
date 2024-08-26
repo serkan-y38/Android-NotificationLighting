@@ -18,4 +18,8 @@ interface LightingDataStoreRepository {
     fun getBorderThickness(): Flow<Int>
 
     suspend fun setBorderThickness(thickness: Int)
+
+    fun getIconSize(): Flow<Int>
+
+    suspend fun setIconSize(size: Int)
 }

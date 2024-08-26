@@ -40,4 +40,12 @@ class LightingDataStoreRepositoryImpl @Inject constructor(
     override suspend fun setBorderThickness(thickness: Int) {
         dataStoreManager.setBorderThickness(thickness)
     }
+
+    override fun getIconSize(): Flow<Int> {
+        return dataStoreManager.getIconSize()
+    }
+
+    override suspend fun setIconSize(size: Int) {
+        dataStoreManager.setIconSize(size)
+    }
 }
