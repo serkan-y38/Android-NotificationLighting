@@ -1,5 +1,7 @@
 package com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.pager_screens
 
+import android.app.Activity
+import android.view.WindowManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,37 +28,56 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavHostController
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.LightingSettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LightingOptionsScreen(
-    navController: NavHostController, viewModel: LightingSettingsViewModel = hiltViewModel()
+    navController: NavHostController, viewModel: LightingSettingsViewModel
 ) {
+    val activity = LocalContext.current as Activity
+    WindowCompat.setDecorFitsSystemWindows(activity.window, false)
+
+    WindowInsetsControllerCompat(
+        activity.window,
+        activity.window.decorView.rootView
+    ).let { controller ->
+        controller.show(WindowInsetsCompat.Type.navigationBars())
+        controller.show(WindowInsetsCompat.Type.statusBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
+    activity.window.clearFlags(
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+    )
 
     val optionsState = viewModel.state.value
 
     var sliderPositionCornerRadiusSize by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(optionsState.screenCornerRadiusSize.toFloat())
     }
 
     var sliderPositionCornerBorderThickness by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(optionsState.borderThickness.toFloat())
     }
 
     var sliderPositionAnimationFrequency by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(optionsState.animationFrequency.toFloat())
     }
 
     var sliderPositionAnimationDuration by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(optionsState.animationDuration.toFloat())
     }
 
     var sliderPositionIconSize by remember {
-        mutableFloatStateOf(0f)
+        mutableFloatStateOf(optionsState.iconSize.toFloat())
     }
 
     LaunchedEffect(optionsState) {
@@ -114,7 +135,6 @@ fun LightingOptionsScreen(
                             inactiveTrackColor = MaterialTheme.colorScheme.secondary,
                         ), valueRange = 16f..64f
                     )
-
                 }
             }
             Card(
@@ -184,7 +204,7 @@ fun LightingOptionsScreen(
                             thumbColor = MaterialTheme.colorScheme.primary,
                             activeTrackColor = MaterialTheme.colorScheme.primary,
                             inactiveTrackColor = MaterialTheme.colorScheme.secondary,
-                        ), valueRange = 4f..12f
+                        ), valueRange = 1f..64f
                     )
 
                 }
@@ -212,17 +232,21 @@ fun LightingOptionsScreen(
                             text = sliderPositionAnimationDuration.toInt().toString()
                         )
                     }
+
                     Slider(
-                        value = sliderPositionAnimationDuration, onValueChange = {
+                        value = sliderPositionAnimationDuration,
+                        onValueChange = {
                             sliderPositionAnimationDuration = it
                             viewModel.setAnimationDuration(duration = sliderPositionAnimationDuration.toInt())
-                        }, colors = SliderDefaults.colors(
+                        },
+                        colors = SliderDefaults.colors(
                             thumbColor = MaterialTheme.colorScheme.primary,
                             activeTrackColor = MaterialTheme.colorScheme.primary,
                             inactiveTrackColor = MaterialTheme.colorScheme.secondary,
-                        ), valueRange = 16f..64f
+                        ),
+                        valueRange = 4000f..10000f,
+                        steps = ((10000f - 4000f) / 1000).toInt() - 1 // steps = total range / step size - 1
                     )
-
                 }
             }
             Card(
@@ -255,7 +279,7 @@ fun LightingOptionsScreen(
                             thumbColor = MaterialTheme.colorScheme.primary,
                             activeTrackColor = MaterialTheme.colorScheme.primary,
                             inactiveTrackColor = MaterialTheme.colorScheme.secondary,
-                        ), valueRange = 16f..64f
+                        ), valueRange = 16f..96f
                     )
                 }
             }

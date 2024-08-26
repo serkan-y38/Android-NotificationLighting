@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.notification_lighting"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -102,5 +102,8 @@ dependencies {
 
     // serialization
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.palette.ktx)
+    implementation(libs.accompanist.drawablepainter)
 
 }

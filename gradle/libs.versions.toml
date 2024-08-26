@@ -19,6 +19,9 @@ hiltNavigationCompose = "1.2.0"
 
 ksp = "2.0.0-1.0.22"
 
+palette = "1.0.0"
+drawablepainter = "0.34.0"
+
 kotlinxCoroutinesAndroid = "1.8.1"
 accompanistSystemuicontroller = "0.34.0"
 datastorePreferences = "1.1.1"
@@ -52,6 +55,9 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "palette" }
+accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "drawablepainter" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

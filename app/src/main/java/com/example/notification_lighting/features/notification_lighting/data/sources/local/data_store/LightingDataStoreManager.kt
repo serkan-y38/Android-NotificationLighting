@@ -35,7 +35,7 @@ class LightingDataStoreManager @Inject constructor(
 
     fun getAnimationDuration(): Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[ANIMATION_DURATION_KEY] ?: 5
+            preferences[ANIMATION_DURATION_KEY] ?: 5000
         }
 
     suspend fun setAnimationDuration(duration: Int) {
