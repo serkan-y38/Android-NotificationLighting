@@ -29,12 +29,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.notification_lighting.core.navigation.NavigationGraph
 
 @Composable
@@ -50,51 +48,16 @@ fun SettingsScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            NotificationOverlayPermissionCard()
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(start = 10.dp, end = 10.dp, top = 10.dp),
-                onClick = {
-                    navController.navigate(NavigationGraph.ScreenNotificationLightingSettings)
-                }
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 10.dp),
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Text(
-                                text = "Notification Lighting Settings",
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            Text(
-                                text = "Customize notification lighting screen",
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                            contentDescription = ""
-                        )
-                    }
-                }
-            }
+            NotificationAndOverlayPermissionCard()
+            NotificationLightingSettingsCard(navController = navController)
+            AppsExcludedCard(navController = navController)
         }
     }
 }
 
 
 @Composable
-fun NotificationOverlayPermissionCard() {
+fun NotificationAndOverlayPermissionCard() {
     val context = LocalContext.current
 
     fun startListenersSettings() {
@@ -206,9 +169,79 @@ fun NotificationOverlayPermissionCard() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview(showSystemUi = true)
-fun Preview() {
-    SettingsScreen(navController = rememberNavController())
+fun NotificationLightingSettingsCard(navController: NavController) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
+        onClick = {
+            navController.navigate(NavigationGraph.ScreenNotificationLightingSettings)
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 10.dp),
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Notification Lighting Settings",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        text = "Customize notification lighting screen",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = ""
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AppsExcludedCard(navController: NavController) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
+        onClick = {
+            navController.navigate(NavigationGraph.ScreenExcludeApp)
+        }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(
+                    text = "Exclude app from Notification Lighting",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Enable or disable notification lighting for a specific app",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = "icon"
+            )
+        }
+    }
 }

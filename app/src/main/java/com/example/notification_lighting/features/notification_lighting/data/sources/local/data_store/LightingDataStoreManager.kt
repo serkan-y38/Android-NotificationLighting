@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -66,9 +67,22 @@ class LightingDataStoreManager @Inject constructor(
         }
     }
 
+    fun getExcludedPackages(): Flow<String> = dataStore.data
+        .map { preferences ->
+            preferences[EXCLUDED_PACKAGES_KEY]
+                ?: "[{\"packageName\":\"empty\",\"appName\":\"empty\",\"isAppExcluded\":true}]"
+        }
+
+    suspend fun setExcludedPackages(packages: String) {
+        dataStore.edit { preferences ->
+            preferences[EXCLUDED_PACKAGES_KEY] = packages
+        }
+    }
+
     companion object {
-        const val DATA_STORE_NAME = "lighting_data_store";
+        const val DATA_STORE_NAME = "lighting_data_store"
         private val CORNER_RADIUS_SIZE_KEY = intPreferencesKey("screen_corner_radius_size")
+        private val EXCLUDED_PACKAGES_KEY = stringPreferencesKey("excluded_packages")
         private val ICON_SIZE_KEY = intPreferencesKey("icon_size")
         private val BORDER_THICKNESS_KEY = intPreferencesKey("screen_border_size")
         private val ANIMATION_FREQUENCY_KEY = intPreferencesKey("animation_frequency")

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.notification_lighting.features.notification_lighting.presentation.screens.exclude_app_screen.ExcludeAppScreen
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.NotificationLightingSettingsScreen
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.settings_screen.SettingsScreen
 
@@ -20,6 +21,9 @@ fun SetUpNavigationGraph(navHostController: NavHostController) {
         }
         composable<NavigationGraph.ScreenNotificationLightingSettings> {
             NotificationLightingSettingsScreen(navController = navHostController)
+        }
+        composable<NavigationGraph.ScreenExcludeApp> {
+            ExcludeAppScreen(navController = navHostController)
         }
     }
 }

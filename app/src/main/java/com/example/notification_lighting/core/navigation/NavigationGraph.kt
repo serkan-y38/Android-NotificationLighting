@@ -8,4 +8,7 @@ class NavigationGraph {
 
     @Serializable
     object ScreenNotificationLightingSettings
+
+    @Serializable
+    object ScreenExcludeApp
 }

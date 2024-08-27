@@ -48,4 +48,12 @@ class LightingDataStoreRepositoryImpl @Inject constructor(
     override suspend fun setIconSize(size: Int) {
         dataStoreManager.setIconSize(size)
     }
+
+    override fun getExcludedPackages(): Flow<String> {
+        return dataStoreManager.getExcludedPackages()
+    }
+
+    override suspend fun setExcludedPackages(packages: String) {
+        dataStoreManager.setExcludedPackages(packages)
+    }
 }

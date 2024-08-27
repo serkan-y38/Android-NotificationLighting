@@ -22,4 +22,8 @@ interface LightingDataStoreRepository {
     fun getIconSize(): Flow<Int>
 
     suspend fun setIconSize(size: Int)
+
+    fun getExcludedPackages(): Flow<String>
+
+    suspend fun setExcludedPackages(packages: String)
 }
