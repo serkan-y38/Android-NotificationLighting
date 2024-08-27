@@ -53,8 +53,10 @@ class NotificationLightingActivity : ComponentActivity() {
         WindowInsetsControllerCompat(window, window.decorView.rootView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.navigationBars())
             controller.hide(WindowInsetsCompat.Type.statusBars())
+            /*
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+             */
         }
 
         window.setFlags(

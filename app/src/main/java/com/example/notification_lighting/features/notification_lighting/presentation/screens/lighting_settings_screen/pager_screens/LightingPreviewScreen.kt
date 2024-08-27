@@ -1,11 +1,15 @@
 package com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.pager_screens
 
 import android.app.Activity
+import android.os.Handler
+import android.os.Looper
 import android.view.WindowManager
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
@@ -16,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,22 +29,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.common.AnimatedBorder
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.LightingSettingsViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun LightingPreviewScreen(viewModel: LightingSettingsViewModel) {
-
+fun LightingPreviewScreen(
+    viewModel: LightingSettingsViewModel, pagerState: PagerState
+) {
     val activity = LocalContext.current as Activity
-    WindowCompat.setDecorFitsSystemWindows(activity.window, false)
+    val controller =
+        WindowCompat.getInsetsController(activity.window, activity.window.decorView.rootView)
 
-    WindowInsetsControllerCompat(activity.window, activity.window.decorView.rootView).let { controller ->
-        controller.hide(WindowInsetsCompat.Type.navigationBars())
-        controller.hide(WindowInsetsCompat.Type.statusBars())
-        controller.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
+    controller.hide(WindowInsetsCompat.Type.navigationBars())
+    controller.hide(WindowInsetsCompat.Type.statusBars())
 
     activity.window.setFlags(
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -47,6 +50,7 @@ fun LightingPreviewScreen(viewModel: LightingSettingsViewModel) {
     )
 
     val optionsState = viewModel.state.value
+    val scope = rememberCoroutineScope()
 
     var cornerRadiusSize by remember {
         mutableIntStateOf(optionsState.screenCornerRadiusSize)
@@ -68,6 +72,12 @@ fun LightingPreviewScreen(viewModel: LightingSettingsViewModel) {
         mutableIntStateOf(optionsState.iconSize)
     }
 
+    val colorList: MutableList<Color> = mutableListOf()
+    for (i in 1..animationFrequency) {
+        colorList.add(MaterialTheme.colorScheme.primary)
+        colorList.add(Color.Black)
+    }
+
     LaunchedEffect(optionsState) {
         cornerRadiusSize = optionsState.screenCornerRadiusSize
         cornerBorderThickness = optionsState.borderThickness
@@ -76,10 +86,10 @@ fun LightingPreviewScreen(viewModel: LightingSettingsViewModel) {
         iconSize = optionsState.iconSize
     }
 
-    val colorList: MutableList<Color> = mutableListOf()
-    for (i in 1..animationFrequency) {
-        colorList.add(MaterialTheme.colorScheme.primary)
-        colorList.add(Color.Black)
+    BackHandler {
+        scope.launch {
+            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+        }
     }
 
     AnimatedBorder(
@@ -100,4 +110,9 @@ fun LightingPreviewScreen(viewModel: LightingSettingsViewModel) {
             })
         }
     )
+    Handler(Looper.getMainLooper()).postDelayed({
+        scope.launch {
+            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+        }
+    }, animationDuration.toLong())
 }

@@ -22,7 +22,7 @@ ksp = "2.0.0-1.0.22"
 palette = "1.0.0"
 drawablepainter = "0.34.0"
 
-kotlinxCoroutinesAndroid = "1.8.1"
+coroutines = "1.8.1"
 accompanistSystemuicontroller = "0.34.0"
 datastorePreferences = "1.1.1"
 serialization = "1.7.1"
@@ -46,7 +46,9 @@ androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 junit = { module = "junit:junit", version.ref = "junit" }
 
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }

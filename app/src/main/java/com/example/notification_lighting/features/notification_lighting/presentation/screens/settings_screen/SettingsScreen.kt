@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -42,7 +40,6 @@ import com.example.notification_lighting.core.navigation.NavigationGraph
 @Composable
 @ExperimentalMaterial3Api
 fun SettingsScreen(navController: NavController) {
-
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -213,5 +210,5 @@ fun NotificationOverlayPermissionCard() {
 @Composable
 @Preview(showSystemUi = true)
 fun Preview() {
-    SettingsScreen(navController = rememberNavController());
+    SettingsScreen(navController = rememberNavController())
 }

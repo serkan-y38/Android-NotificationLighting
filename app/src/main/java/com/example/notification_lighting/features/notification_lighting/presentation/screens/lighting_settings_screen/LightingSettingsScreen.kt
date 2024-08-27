@@ -21,13 +21,23 @@ fun NotificationLightingSettingsScreen(
     )
 
     HorizontalPager(
+        userScrollEnabled = false,
         state = pagerState,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) { page ->
         when (page) {
-            0 -> LightingOptionsScreen(navController = navController, viewModel = viewModel)
-            1 -> LightingPreviewScreen(viewModel = viewModel)
+            0 ->
+                LightingOptionsScreen(
+                    navController = navController,
+                    viewModel = viewModel,
+                    pagerState = pagerState
+                )
+
+            1 ->
+                LightingPreviewScreen(
+                    viewModel = viewModel,
+                    pagerState = pagerState
+                )
         }
     }
 }
