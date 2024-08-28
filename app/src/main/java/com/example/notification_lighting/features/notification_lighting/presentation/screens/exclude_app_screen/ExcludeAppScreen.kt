@@ -40,8 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.notification_lighting.features.notification_lighting.domain.model.PackageModel
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -148,7 +148,7 @@ fun ExcludeAppScreen(
                                         )
                                     }
                                     Switch(
-                                        modifier = Modifier.scale(scaleX = 0.6f, scaleY = 0.6f),
+                                        modifier = Modifier.scale(scaleX = 0.7f, scaleY = 0.7f),
                                         checked = isAppExcluded,
                                         onCheckedChange = { checked ->
                                             isAppExcluded = checked
@@ -175,10 +175,3 @@ fun ExcludeAppScreen(
         }
     }
 }
-
-@Serializable
-data class PackageModel(
-    val packageName: String,
-    val appName: String,
-    val isAppExcluded: Boolean
-)

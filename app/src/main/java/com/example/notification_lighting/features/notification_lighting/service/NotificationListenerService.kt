@@ -7,15 +7,25 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.PowerManager
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.example.notification_lighting.features.notification_lighting.presentation.screens.NotificationLightingActivity
+import com.example.notification_lighting.features.notification_lighting.data.sources.local.data_store.LightingDataStoreManager
+import com.example.notification_lighting.features.notification_lighting.domain.model.PackageModel
+import com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_screen.NotificationLightingActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 class NotificationListenerService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
-
-        if (!isScreenOn() && !sbn!!.isOngoing)
-            lockScreenLightning(sbn.packageName)
+        CoroutineScope(Dispatchers.Main).launch {
+            LightingDataStoreManager(baseContext).getExcludedPackages().collect { packages ->
+                val excludedPackages = Json.decodeFromString<List<PackageModel>>(packages)
+                val isExcluded = excludedPackages.any { it.packageName == sbn!!.packageName }
+                if (!isExcluded && !isScreenOn() && !sbn!!.isOngoing) lockScreenLightning(sbn.packageName)
+            }
+        }
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
@@ -39,5 +49,4 @@ class NotificationListenerService : NotificationListenerService() {
     companion object {
         const val PACKAGE_NAME = "PACKAGE_NAME"
     }
-
 }

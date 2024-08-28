@@ -1,4 +1,4 @@
-package com.example.notification_lighting.features.notification_lighting.presentation.screens
+package com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_screen
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -34,7 +34,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.palette.graphics.Palette
 import com.example.notification_lighting.R
 import com.example.notification_lighting.features.notification_lighting.presentation.screens.common.AnimatedBorder
-import com.example.notification_lighting.features.notification_lighting.presentation.screens.lighting_settings_screen.LightingSettingsViewModel
 import com.example.notification_lighting.features.notification_lighting.presentation.ui.theme.NotificationLightingTheme
 import com.example.notification_lighting.features.notification_lighting.service.NotificationListenerService
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -53,10 +52,7 @@ class NotificationLightingActivity : ComponentActivity() {
         WindowInsetsControllerCompat(window, window.decorView.rootView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.navigationBars())
             controller.hide(WindowInsetsCompat.Type.statusBars())
-            /*
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-             */
+            // controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         window.setFlags(
@@ -68,7 +64,7 @@ class NotificationLightingActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        val viewModel: LightingSettingsViewModel by viewModels()
+        val viewModel: LightingViewModel by viewModels()
 
         val packageName = intent.getStringExtra(NotificationListenerService.PACKAGE_NAME)
         val icon = packageManager.getApplicationIcon(packageName!!)
@@ -112,7 +108,8 @@ class NotificationLightingActivity : ComponentActivity() {
                     }
 
                     if (cornerRadiusSize != 0 && cornerBorderThickness != 0
-                        && animationFrequency != 0 && animationDuration != 0 && iconSize != 0) {
+                        && animationFrequency != 0 && animationDuration != 0 && iconSize != 0
+                    ) {
 
                         val colorList: MutableList<Color> = mutableListOf()
                         for (i in 1..animationFrequency) {
@@ -151,4 +148,3 @@ class NotificationLightingActivity : ComponentActivity() {
     private fun getVibrantColor(bm: Bitmap): Color =
         Color(Palette.from(bm).generate().getVibrantColor(R.color.black))
 }
-
